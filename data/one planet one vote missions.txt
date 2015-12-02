@@ -1,0 +1,150 @@
+# Copyright (c) 2015 by Nate Graham
+#
+# Endless Sky is free software: you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later version.
+#
+# Endless Sky is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+	
+mission "Protesters block your landing"
+	source
+		government Republic
+	to offer
+		random < 100
+	landing
+	on fail
+		payment 5000000
+	on offer
+		conversation
+			`During your final approach to the spaceport, you receive a message that your landing clearance has suddenly been revoked. You see that a sizable crowd appears to be assembled on top of the landing pads, preventing ships from touching down. You activate the fuselage camera and zoom in on the crowd. It seems to be a protest of some sort based on the fact that many of the people seem to be holding signs and banners, though you are still too far away to read what they say.`
+			`You obey the air traffic control signals and put the <ship> into a holding pattern. Sensors show several other ships in the same predicament, circling around in the sky waiting for the crowd to disperse. After about an hour of this, you check the monitor and see that the crowd seems to be going nowhere fast.`
+
+			choice
+				`	(Get a closer look)`
+					goto "get closer"
+				`	(Buzz the crowd and try to get them to disperse)`
+					goto "intimidate them"
+				`	(Give up and land on another planet)`
+					defer
+
+			label "get closer"
+			`	You're curious to know just what it is that they're protesting, and decide to take the <ship> in a bit closer to get a better look. you plot a low course that will take your ship close enough for the external cameras to shoot some video that shows what's written on their signs.`
+			`	As the starship descends, you realize you're probably too close to the crowd. The roar of the engines is too much for the protestors, and they begin to flee, chased by spaceport police who seem to have suddenly gained some courage.`
+				goto land
+
+			label "intimidate them"
+			`	How irritating. By deliberately blocking the spaceport's landing pads, these people are gumming up the works of intergalactic commerce and inconveniencing a lot of honest people. You decide to see if you can get them to disperse.`
+			`	You plot a low course that will take the <ship> directly over the crowd. Hopefully the sight and noise of your starship will frighten them off. You ignite the horizontal boosters and the <ship> roars over the landing pad. And at the last moment before it passes overhead of the protesters, you alter the engine's fuel mixture slightly and an enormous gout of flame bellows out of the engine bleed-off vents. It must be quite an intimidating sight, because the crowd immediately begins to disperse. Success!`
+				goto fine
+
+			label land
+			`	You bring your ship down on the now-clear landing pad and fill out the normal paperwork. Stepping out of the main hatch, you see that the crowd has moved over to the entrances of the spaceport, surrounded by a thin line of spaceport police keeping them from blocking people from entering. If you want to find out what's going on, the spaceport is where you'll find the protestors.`
+				decline
+
+			label fine
+			`	You bring your ship down on the now-clear landing pad and fill out the normal paperwork. It seems that the traffic control crew is less then impressed and the spaceport police assess you a fine of 500,000 credits for your dangerous maneuver. Stepping out of the main hatch, you see that the crowd has moved over to the entrances of the spaceport, surrounded by a thin line of spaceport police keeping them from blocking people from entering. If you want to enter the spaceport, you'll have to right past the protestors.`
+				fail
+
+
+
+
+
+
+
+
+
+mission "Transport Walter Philipps"
+	description "Pick up Walter Philipps, a friend of the One Planet One Vote movement, from <destination> and bring him back to <source> before <date>"
+	to offer
+		"Protesters block your landing": offered
+	destination
+		government Republic "Free Worlds" Syndicate Neutral
+		distance 3 3
+	deadline 7
+	passengers 1
+	on offer
+		conversation
+			`	You head over to the spaceport and get a closer look at the protestors. At this point, it becomes clear that they're political activists, many of whom are carrying signs saying, "One planet, one vote!". They must be advocates of the proposition for equal planetary representation in Parliament. Spaceport police eye them warily, blocking their path so that people can still enter and exit the Spaceport.`
+			`	You've read a bit about the "One Planet, One Vote" movement. Parliament's current proportional representation system strongly privileges high-population planets, who tend to run roughshod over the interests of the more sparsely-populated planets in the Dirt Belt and the Rim. These activists want the creation of a new house of Parliament that consists of individual representatives for each planet: one planet, one vote. In theory, this would provide a counterweight to the existing house of Parliament that mostly represents the populous planets.`
+			`	While you stand there in front of the enormous crowd, a young woman in front of you gets done yelling "One planet, one vote! One planet, one vote!" and then turns to look at you, saying, "C'mon, join in!" You scan the crowd and see a couple of other people wearing ships' crew uniforms. Seems like a popular movement.
+			choice
+				`	"No way!"`
+					goto reject
+				`	"Sure, let's do it!"`
+					goto join
+
+			label reject
+			`	You walk away. Not something you want to get involved in.`
+				decline
+
+			label join
+			`	You push your way into the crowd. What fun! A hand emerges from the throng of bodies and offers you a sign, which you grab and start waving around just like everyone else. "One planet, one vote! One planet, one vote!" The crowd yells and writhes and you yell and writhe right along with it.`
+			`	It starts to get dark after a few hours, and people begin to wander off as the protest dies down. Looks like it's been a success; there was no violence and quite a few bystanders joined in. The young lady who invited you to join in walks over to you.`
+			`	"Hey there. I'm Amanda, and I'm the organizer of this protest." You introduce yourself. "Thanks for joining in, captain <last>. What do you think about the One Planet One Vote movement?"
+			choice
+				`	"Seems to make sense to me. The more populous planets definitely abuse their political power right now."`
+					goto agree
+				`	"I dunno, it seems kind of idealistic to me. Nothing ever really changes."`
+					goto evasive
+				`	"It's always fun to protest something, but I don't agree. Parliament seems to be doing a pretty good job already."`
+					goto disagree
+
+			label disagree
+			`	Her eyes narrow and hew face arranges itself into a scowl. "Then what were you doing stringing us along participating in the protest? Get out of here!" She shoves you away and walks off.`
+				decline
+
+			label evasive
+			`	"Well, with that kind of cynicism, nothing ever will," replies Amanda. "None of the injustices of the galaxy righted themselves, you know. Assuming it's feasible, what do you think of the One Planet One Vote movement?"`
+			`	 You start to get the feeling that you're being tested.`
+
+			choice
+				`	"Seems to make sense to me. The more populous planets definitely abuse their political power right now."`
+					goto agree
+				`	"It's always fun to protest something, but I don't agree. Parliament seems to be doing a pretty good job already."`
+					goto disagree
+
+			label agree
+			`	"Great," Amanda replies. "I had a feeling you thought so, the way you were getting into it. Listen, the reason why I'm asking is because I noticed your captain's outfit and we need someone trustworthy to pick up a friend who's on <destination>. The ship we came here on has developed engine trouble and won't be able to pick him up in time for a meeting with the planetary governor here on <origin> in a week. Can you pick him up?`
+			choice
+				`	"I'd love to, but I already have some high-priority deliveries to make and won't be able to get there and back in time."`
+					goto "want to but can't"
+				`	"No, I don't think I'm going to be able to."`
+					goto "don't want to"
+				`	"Yes, I can do that."`
+					goto "do it"
+
+			label "want to but can't"
+			`	Amanda says, "Ok, I understand. Let me tell you what, I'll send you a message the next time we have something that needs doing and you're in our neck of the, uh, galaxy." She chuckles softly at her lame joke. "Maybe our paths will cross again."`
+				defer
+
+			label "don't want to"
+			`	Amanda's smile quickly turns into a frown. She says, "That's a shame. Goodbye captain," and walks away.`
+				decline
+
+			label "do it"
+			`	Amanda says, "Excellent. Your passenger's name is Walter Philipps. Ring a bell?" You shake your head. "I suppose if you don't run in our circles, you might not have heard of him. He's an experienced Syndicate negotiator who retired a few years back and lends his skills to activists like us. He's just agreed to join the One Planet One Vote movement! This is a major coup for us. Right now he's on <destination> and he needs a lift back here. We've got a meeting with the planetary governor in a week and it will probably go much, much better with Walter in the room. So go get him and be back in a week. We'll be waiting!"`
+			choice
+				`	"I'll be back soon with Walter."`
+					accept
+				`	"So that reminds me... what kind of pay are you offering for this transport job?"`
+
+			`	A disappointed look creeps across Amanda's face. "Our operation runs on a pretty shoestring budget here and most of our volunteers are just that--volunteers." She says. "Is that going to be a problem?"`
+			choice
+				`	"I've got expenses just like you do. I can't work for free. Any other transport captain will give you the same answer."`
+					goto "blew it"
+				`	"No, forget I asked."`
+					goto "all good"
+
+			label "blew it"
+			`	Amanda shoots you an icy look and says, "Actually, what'll really happen is that I'll find a transport captain who values fairness and justice more than his wallet. Goodbye."
+				decline
+
+			label "all good"
+			`	"Glad to hear it," Amanda says. "I'll see you in a week."`
+				accept
+
+	on complete
+		conversation
